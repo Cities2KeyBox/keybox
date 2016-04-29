@@ -1,0 +1,44 @@
+<div class="jumbotron text-center">
+    <h3>Página estudiantes</h3>
+    <br>
+    <div class="container">
+
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-1">
+            <table class="table table-striped">
+                <tr class="info">
+                    <td>Nombre</td>
+                    <td>Dirección</td>
+                    <td>Tlf casa</td>
+                    <td>Tlf trabajo</td>
+                </tr>
+                <tr ng-repeat="student in students" ng-click="selectPerson(persona)">
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.address }}</td>
+                    <td>{{ student.phones.home }}</td>
+                    <td>{{ student.phones.work }}</td>
+                    <td><button ng-click="deleteStudent(student._id)">x</button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1 text-center">
+            <form name="myForm">
+                <p>{{ message }}</p>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Nombre" ng-model="newStudent.name" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Dirección" ng-model="newStudent.address" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Teléfono casa" ng-model="newStudent.phones.home" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Teléfono trabajo" ng-model="newStudent.phones.work" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg" ng-click="registrarPersona()" ng-disabled="myForm.$invalid || selected">Registrar</button>
+                <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
+                <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Borrar</button>!-->
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,29 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="angularRoutingApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Examen MEAN</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="bower_components/angularjs/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="js/routes.js"></script>
+</head>
+<body ng-controller="mainController">
+<div id="routes">
+    <div class="jumbotron text-center">
+        <h1>Examen MEAN</h1>
+        <ul class="nav navbar-nav">
+            <li><a href="#home" data-clicktrack="true">Inicio</a></li>
+            <li><a href="#students" data-clicktrack="true">Estudiantes</a></li>
+            <li><a href="#subjects" data-clicktrack="true">Asignaturas</a></li>
+        </ul>
+    </div>
+    <!-- Aquí inyectamos las vistas -->
+    <div ng-view></div>
+
+</div>
+</body>
+</html>

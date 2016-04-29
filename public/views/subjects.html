@@ -1,0 +1,72 @@
+<div class="jumbotron text-center">
+    <h3>Página asignaturas</h3>
+    <p>{{ message }}</p>
+    <br>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-0">
+                <table class="table table-striped">
+                    <tr class="info">
+                        <td>Asignaturas</td>
+                        <td>Eliminar</td>
+                    </tr>
+                    <tr ng-repeat="subject in subjects">
+                        <td><text ng-click="selectSubject(subject)">{{subject.name}}</text></td>
+                       <!-- <td>{{ subject.students }}</td>-->
+                        <td><button ng-click="deleteSubject(subject._id)">x</button></td>
+                    </tr>
+                </table>
+                <input type="text" class="form-control input-lg text-center" placeholder="Nombre de nueva asignatura" ng-model="newSubject.name">
+                <br>
+                <button type="submit" class="btn btn-success btn-lg" ng-click="addSubject()">Añadir asignatura</button>
+            </div>
+
+            <div class="col-sm-3 col-sm-offset-1 text-center" ng-show="table1">
+                <form name="myForm">
+                    <div class="form-group">
+                        <table class="table table-striped">
+                            <tr class="info">
+                                <td>Alumnos inscritos en {{selectedSubject.name}}</td>
+                            </tr>
+                            <tr ng-repeat="students in selectedSubject.students">
+                                 <td><text ng-click="selectStudent(students)">{{ students }}</text></td>
+                            </tr>
+                        </table>
+
+                       <input type="text" class="form-control input-lg text-center" placeholder="Añadir nombre estudiante" ng-model="newStudent.student" required>
+                        <br>
+
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg" ng-click="addStudent()">Añadir estudiante</button>
+                </form>
+            </div>
+
+            <div class="col-sm-3 col-sm-offset-1" ng-show="table2">
+                <form name="myForm">
+                    <div class="form-group">
+                        <table class="table table-striped">
+                            <tr class="info">
+                                <td><b>Detalle alumno</b></td>
+                            </tr>
+                            <tr>
+                                <td><text>Nombre: {{ students.name }}</text></td>
+                            </tr>
+                            <tr>
+                                <td><text>Dirección: {{ students.address }}</text></td>
+                            </tr>
+                            <tr>
+                                <td><text>Tlf. Casa: {{ students.phones.home }}</text></td>
+                            </tr>
+                            <tr>
+                                <td><text>Tlf. Trabajo: {{ students.phones.work }}</text></td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>

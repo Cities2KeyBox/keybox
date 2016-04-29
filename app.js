@@ -4,11 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost/eventupdb', function (err,res){
+  if(err) console.log('ERROR: connecting to Database. '+ err);
+  else console.log('Connected to Database');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,5 +59,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.listen(3000, function(){
+    console.log("Server listen to port 3000");
+})
 
-module.exports = app;
+//module.exports = app;
