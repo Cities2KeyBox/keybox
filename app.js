@@ -7,13 +7,16 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
 
+
 mongoose.connect('mongodb://localhost/eventupdb', function (err,res){
   if(err) console.log('ERROR: connecting to Database. '+ err);
   else console.log('Connected to Database');
 });
 
+//modelos Mongo
+require('./models/userModel');
+
 // requires the model with Passport-Local Mongoose plugged in
-var User = require('./models/userModel.js');
 var auth = require('./config/auth.js');
 var middleware = require('./config/middleware');
 
@@ -30,11 +33,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var routes = require('./routes/index');
-var user = require('./routes/user');
-app.use('/key', middleware.ensureAuthenticated, routes);
-app.use('/user', middleware.ensureAuthenticated, user);
-app.post('/register', auth.signup);
-app.post('/login', auth.signin);
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,17 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var userModel = require('mongoose').model('User');
+var user = require('./user');
+var key = require('./key');
+var auth = require('../config/auth.js');
+var middleware = require('../config/middleware.js');
 
-getKeys = function (req, res){
-    var user = req.user;
-    userModel.find({_id:user['_id']}, {keys:1}, function (err, result){
-        if(err) throw err;
-        else{
-            res.status(200).send(result);
-        }
-    })
-}
+router.use('/key', middleware.ensureAuthenticated, key);
+router.use('/user', middleware.ensureAuthenticated, user);
+router.post('/register', auth.signup);
+router.post('/login', auth.signin);
 
-
-router.get('/keys', getKeys);
 module.exports = router;
