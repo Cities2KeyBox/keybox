@@ -5,14 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var routes = require('./routes/index');
-
 var app = express();
 
 mongoose.connect('mongodb://localhost/eventupdb', function (err,res){
   if(err) console.log('ERROR: connecting to Database. '+ err);
   else console.log('Connected to Database');
 });
+
+// requires the model with Passport-Local Mongoose plugged in
+var User = require('./models/userModel.js');
+var auth = require('./config/auth.js');
+var middleware = require('./config/middleware');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +29,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+var routes = require('./routes/index');
+var user = require('./routes/user');
+app.use('/key', middleware.ensureAuthenticated, routes);
+app.use('/user', middleware.ensureAuthenticated, user);
+app.post('/register', auth.signup);
+app.post('/login', auth.signin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
