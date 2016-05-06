@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 
-mongoose.connect('mongodb://localhost/eventupdb', function (err,res){
+mongoose.connect('mongodb://localhost/keybox', function (err,res){
   if(err) console.log('ERROR: connecting to Database. '+ err);
   else console.log('Connected to Database');
 });

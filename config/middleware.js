@@ -17,7 +17,7 @@ exports.ensureAuthenticated = function(req, res, next) {
          .status(401)
         .send({message: "El token ha expirado"});
   }
-
+  console.log("payload", payload.sub);
   req.user = payload.sub;
   next();
 }
