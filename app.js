@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/keybox', function (err,res){
 
 //modelos Mongo
 require('./models/userModel');
+require('./models/emailModel');
 
 // requires the model with Passport-Local Mongoose plugged in
 var auth = require('./config/auth.js');

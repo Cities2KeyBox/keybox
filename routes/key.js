@@ -53,7 +53,7 @@ createKey = function (req, res, next){
 					});
 					user.save(user, function (err, result){
 						if(err) next(err);
-						else res.status(201).send(result);
+						else res.status(201).send("Created!");
 					})
 				} else{
 					res.status(403).send("403 Unathorization");
@@ -83,7 +83,7 @@ updateKey = function (req, res, next){
 							tag:req.body.tag,
 							username:req.body.user,
 							password:req.body.pass,
-							comment:req.body.comment || null
+							comment:req.body.comment || undefined
 						}
 						result.save(function (err){
 							if(err) next(err);
