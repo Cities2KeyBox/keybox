@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userModel = require('mongoose').model('User');
-var userEmailModel = require('Mongoose').model('Email');
+var userEmailModel = require('mongoose').model('Email');
 
 getUsers = function (req, res){
 	console.log("user", req.user);

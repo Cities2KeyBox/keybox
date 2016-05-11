@@ -6,4 +6,4 @@ var Email = new Schema({
 	email:{type:String, require:true, unique : true}
 });
 
-module.exports = mongoose.model('email', Email);
+module.exports = mongoose.model('Email', Email);
