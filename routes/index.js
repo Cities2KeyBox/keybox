@@ -9,5 +9,6 @@ router.use('/key', middleware.ensureAuthenticated, key);
 router.use('/user', middleware.ensureAuthenticated, user);
 router.post('/register', auth.signup);
 router.post('/login', auth.signin);
+router.post('/commonRegister', auth.signupCommonUser);
 
 module.exports = router;
