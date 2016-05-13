@@ -1,0 +1,14 @@
+{
+  "name": "Shamir SS",
+  "authors": [
+    "Oriol Castaño"
+  ],
+  "dependencies": {
+    "bootstrap": "3.0.0",
+    "angularjs": "1.2.16",
+    "angular-route": "1.2.6",
+    "bootstrap-social": "~4.8.0",
+    "flot.tooltip": "~0.8.4",
+    "angular-clipboard": "^1.4.1"
+  }
+}

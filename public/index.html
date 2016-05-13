@@ -1,0 +1,36 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="angularRoutingApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Smart Cities II - Sharing Secret</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="bower_components/bootstrap/examples/navbar/navbar.css" rel="stylesheet">
+    <script src="bower_components/angularjs/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/secrets.js"></script>
+</head>
+<body ng-controller="mainController">
+<div id="routes">
+    <div class="jumbotron text-center">
+        <h1>Shamir Secret Sharing</h1>
+        <ul class="nav navbar-nav">
+            <li><a href="#home" data-clicktrack="true">Inicio</a></li>
+            <li><a href="#secret" data-clicktrack="true">Crear Secreto</a></li>
+            <li><a href="#combine" data-clicktrack="true">Recuperar secreto</a></li>
+        </ul>
+    </div>
+    <!-- Aquí inyectamos las vistas -->
+    <div ng-view></div>
+
+</div>
+</body>
+</html>
