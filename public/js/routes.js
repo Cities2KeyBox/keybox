@@ -21,13 +21,29 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/combine.html',
             controller  : 'combineController'
         })
+        .when('/signup', {
+            templateUrl : 'views/signup.html',
+            controller  : 'mainController'
+        })
         .otherwise({
             redirectTo: '/'
         });
 });
 
 angularRoutingApp.controller('mainController', function($scope) {
-    $scope.message =  'Smart Cities II - Shamir Secret Sharing';
+    $scope.message =  'Smart Cities II - KeyBox Proyect';
+    $scope.signupI = false;
+    $scope.signupII = true;
+
+    $scope.signI = function () {
+        $scope.signupI = true;
+        $scope.signupII = false;
+
+        //Conexión con backend
+
+        //
+    }
+
 });
 
 angularRoutingApp.controller('secretController', function($scope) {

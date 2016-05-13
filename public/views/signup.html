@@ -1,0 +1,25 @@
+<div class="container" style="width: 300px; align-content: center">
+
+    <form class="form-signin" ng-hide="signupI">
+        <h2 class="form-signin-heading" style="text-align: center">Sign UP</h2>
+        <input type="text" class="form-control" placeholder="Email address" autofocus style="margin-bottom: 5px">
+        <input type="text" class="form-control" placeholder="Password">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signI()">Sign Up</button>
+    </form>
+
+    <form class="form-signin" ng-hide="signupII">
+        <h2 class="form-signin-heading" style="text-align: center">Sign UP with alias</h2>
+        <input type="text" class="form-control" placeholder="Alias" autofocus style="margin-bottom: 5px">
+        <input type="password" class="form-control" placeholder="Password" autofocus style="margin-bottom: 5px">
+        <input type="password" class="form-control" placeholder="Repite password" autofocus style="margin-bottom: 5px">
+        <input type="text" class="form-control" placeholder="Signed Public Key" autofocus style="margin-bottom: 5px">
+        <input type="text" class="form-control" placeholder="Private Key" autofocus style="margin-bottom: 5px">
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signupII()">Sign Up</button>
+    </form>
+</div> <!-- /container -->

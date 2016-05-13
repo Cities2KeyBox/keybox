@@ -41,3 +41,5 @@ jspm_packages
 public/Theme/.DS_Store
 
 public/Theme/assets/.DS_Store
+
+.idea/workspace.xml
