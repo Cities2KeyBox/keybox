@@ -30,19 +30,52 @@ angularRoutingApp.config(function($routeProvider) {
         });
 });
 
-angularRoutingApp.controller('mainController', function($scope) {
+angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.message =  'Smart Cities II - KeyBox Proyect';
     $scope.signupI = false;
     $scope.signupII = true;
 
-    $scope.signI = function () {
+  
+    
+   
+    
+        
+        $scope.signI = function() {
+        
         $scope.signupI = true;
         $scope.signupII = false;
+        
+        var mail = $scope.signup.mail;
+        var username= $scope.signup.user;
+        var newuser = {
+            email: mail,
+            name : username
+        };  
+         
+                    $http.post('/registerUser', newuser)
+            .success(function (data) {
+               
+
+                $scope.signup.mail = "";
+                $scope.signup.user = "";
+               
+
+            })
+          
+                    
+            .error(function (data) {
+                console.log(data);
+
+            })
+            
+        };
+        
 
         //Conexión con backend
 
         //
-    }
+   
+        
 
 });
 
