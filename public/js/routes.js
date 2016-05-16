@@ -50,15 +50,14 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
         var newuser = {
             email: mail,
             name : username
-        };  
-         
-                    $http.post('/registerUser', newuser)
+        };
+                    $http.post('/commonRegister', newuser)
             .success(function (data) {
-               
+
 
                 $scope.signup.mail = "";
                 $scope.signup.user = "";
-               
+
 
             })
           

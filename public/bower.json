@@ -9,6 +9,7 @@
     "angular-route": "1.2.6",
     "bootstrap-social": "~4.8.0",
     "flot.tooltip": "~0.8.4",
-    "angular-clipboard": "^1.4.1"
+    "angular-clipboard": "^1.4.1",
+    "node-bigint": "https://github.com/substack/node-bigint.git#^0.4.2"
   }
 }
