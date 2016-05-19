@@ -39,11 +39,6 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.signupI = false;
     $scope.signupII = true;
 
-  
-    
-   
-    
-        
         $scope.signI = function() {
         
         $scope.signupI = false; //poner a true
@@ -72,14 +67,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
             })
             
         };
-        
-
         //Conexión con backend
 
         //
-   
-        
-
 });
 
 angularRoutingApp.controller('secretController', function($scope) {
