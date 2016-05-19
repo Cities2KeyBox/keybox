@@ -60,8 +60,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
 
                 var keys = rsa.generateKeys();
 
-
-
+                //private key
+                $scope.p = keys.privateKey.p;
+                console.log($scope.p);
 
             })
           
