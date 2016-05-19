@@ -1,4 +1,4 @@
-(function(exports, global){
+var bigInt = ('../bower_components/big-integer/BigInteger.js');
 bigInt.prime = function (bitLength) {
     var rnd = bigInt.zero;
     var isPrime = false;
@@ -52,6 +52,3 @@ bigInt.modInv = function (a, n) {
         return ret;
     }
 };
-    exports.init();
-})(typeof module !== 'undefined' && module['exports'] ? module['exports'] : (window['big-integer-scii'] = {}), typeof GLOBAL !== 'undefined' ? GLOBAL : window );
-

@@ -42,7 +42,8 @@ exports.signupCommonUser = function (req, res){
                     console.log(error);
                 } else {
                     console.log("User saved in database");
-                    var transporter = nodemailer.createTransport({
+                    res.status(200).json(newUser)
+                    /*var transporter = nodemailer.createTransport({
                         service: 'Gmail',
                         auth: {
                             user: 'keyboxcitie2@gmail.com',
@@ -66,7 +67,7 @@ exports.signupCommonUser = function (req, res){
                             res.status(200).json(newUser)
                         }
                         console.log('Message sent: ' + info.response);
-                    });
+                    });*/
 
                 }
             })

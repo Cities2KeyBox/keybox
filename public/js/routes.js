@@ -1,10 +1,8 @@
-/**
- * Created by Oriol on 15/4/16.
- */
 // Creación del módulo
 var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard']);
 var secrets = ('secrets.js');
 var rsa = ('rsa.js');
+
 
 // Configuración de las rutas
 angularRoutingApp.config(function($routeProvider) {
@@ -57,9 +55,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
 
                 $scope.signup.mail = "";
                 $scope.signup.user = "";
-
+                console.log("HOLA 1");
                 var keys = rsa.generateKeys();
-
+                console.log("HOLA 2");
                 //private key
                 $scope.p = keys.privateKey.p;
                 console.log($scope.p);

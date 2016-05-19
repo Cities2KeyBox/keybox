@@ -1,4 +1,5 @@
-(function(exports, global){
+var bigInt = ('big-integer-scii.js');
+
 rsa = {
     publicKey: function (bits, n, e) {
         this.bits = bits;
@@ -50,5 +51,3 @@ rsa.privateKey.prototype = {
         return c.modPow(this.d, this.publicKey.n);
     }
 };
-    exports.init();
-})(typeof module !== 'undefined' && module['exports'] ? module['exports'] : (window['rsa'] = {}), typeof GLOBAL !== 'undefined' ? GLOBAL : window );
