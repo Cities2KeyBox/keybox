@@ -74,26 +74,6 @@ exports.signupCommonUser = function (req, res){
     });
 };
 
-exports.sendMail = function(req, res){
-    var mailOptions = {
-        from: '"keyBox" <keyboxcitie2@gmail.com>', // sender address
-        to: req.body.email, // list of receivers
-        subject: 'keyBox registration', // Subject line
-        text: 'This mail is for you complete your registration with an anonymous identity', // plaintext body
-        html: '<a>href="http://localhost:3000/#/signup"</a>' // html body
-    };
-
-// send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            return console.log(error);
-        }else{
-            res.status(200).json(mailOptions)
-        }
-        console.log('Message sent: ' + info.response);
-    });
-};
-
 exports.signin = function(req, res, next) {
     var Hashes = require('jshashes');
     var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
