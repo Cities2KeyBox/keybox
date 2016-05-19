@@ -4,6 +4,7 @@
 // Creación del módulo
 var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard']);
 var secrets = ('secrets.js');
+var rsa = ('rsa.js');
 
 // Configuración de las rutas
 angularRoutingApp.config(function($routeProvider) {
@@ -50,12 +51,16 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
             email: mail,
             name : username
         };
-                    $http.post('/commonRegister', newuser)
+            $http.post('/commonRegister', newuser)
             .success(function (data) {
 
 
                 $scope.signup.mail = "";
                 $scope.signup.user = "";
+
+                var keys = rsa.generateKeys();
+
+
 
 
             })
