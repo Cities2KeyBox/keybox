@@ -54,7 +54,7 @@ exports.signupCommonUser = function (req, res){
                         from: '"keyBox" <keyboxcitie2@gmail.com>', // sender address
                         to: req.body.email, // list of receivers
                         subject: 'keyBox registration', // Subject line
-                        html: '<a href="http://localhost:3000/#/signup"> This mail is for you can complete the registration with an anonymous identity </a>' // html body
+                        html: '<a href="http://localhost:3000/#/register"> This mail is for you can complete the registration with an anonymous identity </a>' // html body
                         //<a> This mail is for you can complete the registration with an anonymous identity </a>
                     };
 

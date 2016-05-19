@@ -10,16 +10,43 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signI()">Sign Up</button>
     </form>
 
-    <form class="form-signin" ng-hide="signupII">
-        <h2 class="form-signin-heading" style="text-align: center">Sign UP with alias</h2>
-        <input type="text" class="form-control" placeholder="Alias" autofocus style="margin-bottom: 5px">
-        <input type="password" class="form-control" placeholder="Password" autofocus style="margin-bottom: 5px">
-        <input type="password" class="form-control" placeholder="Repite password" autofocus style="margin-bottom: 5px">
-        <input type="text" class="form-control" placeholder="Signed Public Key" autofocus style="margin-bottom: 5px">
-        <input type="text" class="form-control" placeholder="Private Key" autofocus style="margin-bottom: 5px">
-        <label class="checkbox">
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signupII()">Sign Up</button>
+    <form ng-hide="signupII">
+        <h2 style="text-align: center">Claves usuario</h2>
+        <br>
+        <h4 style="text-align: center">Clave privada</h4>
+        <table class="table table-striped" style='table-layout:fixed'>
+            <tr class="info">
+                <td>p</td>
+            </tr>
+            <tr>
+                <td>{{p}}</td>
+                <!--<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+            </tr>
+            <tr class="info">
+                <td>q</td>
+            </tr>
+            <tr>
+                <td>{{q}}</td>
+                <!--<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+            </tr>
+            <tr class="info">
+                <td>d</td>
+            </tr>
+            <tr>
+                <td>{{d}}</td>
+                <!--<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+            </tr>
+         </table>
+        <h4 style="text-align: center">Clave pública</h4>
+        <table class="table table-striped" style='table-layout:fixed'>
+            <tr class="info">
+                <td>n</td>
+            </tr>
+            <tr>
+                <td>{{n}}</td>
+                <!--<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+            </tr>
+        </table>
+
     </form>
 </div> <!-- /container -->

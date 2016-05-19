@@ -25,6 +25,10 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/signup.html',
             controller  : 'mainController'
         })
+        .when('/register', {
+            templateUrl : 'views/register.html',
+            controller  : 'mainController'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -35,14 +39,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.signupI = false;
     $scope.signupII = true;
 
-  
-    
-   
-    
-        
         $scope.signI = function() {
         
-        $scope.signupI = true;
+        $scope.signupI = false; //poner a true
         $scope.signupII = false;
         
         var mail = $scope.signup.mail;
@@ -68,14 +67,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
             })
             
         };
-        
-
         //Conexión con backend
 
         //
-   
-        
-
 });
 
 angularRoutingApp.controller('secretController', function($scope) {
