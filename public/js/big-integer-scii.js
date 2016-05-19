@@ -1,4 +1,3 @@
-var bigInt = ('../bower_components/big-integer/BigInteger.js');
 bigInt.prime = function (bitLength) {
     var rnd = bigInt.zero;
     var isPrime = false;

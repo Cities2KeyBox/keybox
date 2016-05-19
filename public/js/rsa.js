@@ -1,5 +1,3 @@
-var bigInt = ('big-integer-scii.js');
-
 rsa = {
     publicKey: function (bits, n, e) {
         this.bits = bits;
@@ -12,22 +10,36 @@ rsa = {
         this.d = d;
         this.publicKey = publicKey;
     },
-    generateKeys: function(bitlength) {
+    generateKeys: function (B) {
         var p, q, n, phi, e, d, keys = {};
-        this.bitlength = bitlength || 2048;
-        console.log("Generating RSA keys of", this.bitlength, "bits");
-        p = bigInt.prime(this.bitlength / 2);
-        do {
-            q = bigInt.prime(this.bitlength / 2);
-        } while (q.compare(p) === 0);
-        n = p.multiply(q);
+        var rng = new SecureRandom();
+        var qs = B>>1;
+        e = new BigInteger('65537');
+        for(;;) {
+            for (; ;) {
+                p = new BigInteger(B - qs, 1, rng);
+                if (p.subtract(BigInteger.ONE).gcd(e).compareTo(BigInteger.ONE) == 0 && p.isProbablePrime(10)) break;
+            }
+            for (; ;) {
+                q = new BigInteger(qs, 1, rng);
+                if (q.subtract(BigInteger.ONE).gcd(e).compareTo(BigInteger.ONE) == 0 && q.isProbablePrime(10)) break;
+            }
+            if (p.compareTo(q) <= 0) {
+                var t = p;
+                p = q;
+                q = t;
+            }
+            var p1 = p.subtract(BigInteger.ONE);
+            var q1 = q.subtract(BigInteger.ONE);
+            phi = p1.multiply(q1);
+            if (phi.gcd(e).compareTo(BigInteger.ONE) == 0) {
+                n = p.multiply(q);
+                d = e.modInverse(phi);
+                break;
+            }
+        }
 
-        phi = p.subtract(1).multiply(q.subtract(1));
-
-        e = bigInt(65537);
-        d = bigInt.modInv(e, phi);
-
-        keys.publicKey = new rsa.publicKey(this.bitlength, n, e);
+        keys.publicKey = new rsa.publicKey(B, n , e);
         keys.privateKey = new rsa.privateKey(p, q, d, keys.publicKey);
         return keys;
     }
@@ -35,19 +47,20 @@ rsa = {
 
 
 rsa.publicKey.prototype = {
-    encrypt: function(m) {
+    encrypt: function (m) {
         return m.modPow(this.e, this.n);
     },
-    decrypt: function(c) {
+    decrypt: function (c) {
         return c.modPow(this.e, this.n);
     }
 };
 
 rsa.privateKey.prototype = {
-    encrypt: function(m) {
+    encrypt: function (m) {
         return m.modPow(this.d, this.publicKey.n);
     },
-    decrypt: function(c) {
+    decrypt: function (c) {
         return c.modPow(this.d, this.publicKey.n);
     }
 };
+

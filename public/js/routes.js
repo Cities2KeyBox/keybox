@@ -56,11 +56,15 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
                 $scope.signup.mail = "";
                 $scope.signup.user = "";
                 console.log("HOLA 1");
-                var keys = rsa.generateKeys();
-                console.log("HOLA 2");
-                //private key
-                $scope.p = keys.privateKey.p;
-                console.log($scope.p);
+                var keys = rsa.generateKeys(1024);
+
+                // PRIVATE KEY
+                $scope.p = keys.privateKey.p.toString();
+                $scope.q = keys.privateKey.q.toString();
+                $scope.d = keys.privateKey.d.toString();
+
+                //PUBLIC KEY
+                $scope.n = keys.publicKey.n.toString();
 
             })
           
