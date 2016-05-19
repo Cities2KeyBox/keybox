@@ -26,7 +26,7 @@ angularRoutingApp.config(function($routeProvider) {
         })
         .when('/register', {
             templateUrl : 'views/register.html',
-            controller  : 'mainController'
+            controller  : 'registerController'
         })
         .otherwise({
             redirectTo: '/'
@@ -78,6 +78,23 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
         //Conexión con backend
 
         //
+});
+
+angularRoutingApp.controller('registerController', function ($scope, $http) {
+
+    $scope.sign = function(){
+        $http.get('/serverKeys').success(function(data){
+            var nServer = bigInt(data.n);
+            var eServer = bigInt(data.e);
+
+            console.log("n", nServer);
+
+            $http.post('signKey').success(function(signkey){
+
+            })
+        })
+    };
+
 });
 
 angularRoutingApp.controller('secretController', function($scope) {
