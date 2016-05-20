@@ -81,6 +81,10 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/register.html',
             controller  : 'registerController'
         })
+        .when('/mykeys', {
+            templateUrl : 'views/mykeys.html',
+            controller  : 'mykeysController'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -122,13 +126,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
                 $scope.n = keys.publicKey.n.toString(16);
 
 
-            })
-          
-                    
-            .error(function (data) {
+            }).error(function (data) {
                 console.log(data);
-
-            })
+            });
             
         };
         //Conexión con backend
@@ -139,7 +139,8 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
 angularRoutingApp.controller('registerController', function ($scope, $http) {
 
     $scope.signPKey = function(){
-        $http.get('/serverKeys').success(function(data){
+        $http.get('/serverKeys')
+            .success(function(data){
 
             var nServer = bigInt(data.n, 16);
             var eServer = bigInt(data.e, 16);
@@ -152,15 +153,20 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
 
             var text = blindMsg.toString(16);
 
-            console.log(text);
+            $scope.text = text;
 
+            console.log($scope.text);
 
-            $http.post('/signKey', text).success(function(info){
+            $http.post('/serverKeys2', $scope.text)
+            .success(function(info){
                 console.log(info)
-            }).error(function(data){
+            })
+            .error(function(data){
                 console.log(data);
             })
-        })
+        }).error(function(data2){
+                    console.log(data2);
+                })
     };
 
 });

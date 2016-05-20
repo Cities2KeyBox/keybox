@@ -14,6 +14,6 @@ router.post('/commonRegister', auth.signupCommonUser);
 
 //Blind signature
 router.get('/serverKeys', server.getPublicKeys);
-router.post('/signKey', server.postSignKey);
+router.post('/serverKeys2', server.postSignKey);
 
 module.exports = router;

@@ -1,0 +1,44 @@
+<div class="jumbotron text-center">
+    <h3>Keys Management</h3>
+    <br>
+    <div class="container">
+
+    <div class="row">
+
+        <div class="col-sm-6 text-center">
+            <form name="myForm">
+                <p>{{ message }}</p>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="secreto" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="n" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="t" required>
+                    <br>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="t" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg" ng-click="registrar()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
+                <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
+                <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Borrar</button>!-->
+            </form>
+        </div>
+        <div class="col-sm-6">
+        <table class="table table-striped" style='table-layout:fixed'>
+             <tr class="info">
+                <td>TAG</td>
+                <td> Comment </td>
+                <td> Username </td>
+                <td> Password </td>
+             </tr>
+            <tr ng-repeat="key in keys">
+                <td>{{ $index + 1 }}</td>
+                <td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+                <td class="estilo">{{key}}</td>
+            </tr>
+        </table>
+        </div>
+
+    </div>
+</div>
+
+</div>
