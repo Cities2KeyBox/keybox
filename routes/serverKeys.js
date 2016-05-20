@@ -15,6 +15,16 @@ exports.getPublicKeys = function(req, res){
 };
 
 exports.postSignKey = function(req, res){
-    var key = keys.publicKey.e.toString(16);
-    res.status(200).send(key);
+    var blindtext = bignum(req.body.text, 16);
+    var signtextBig = keys.privateKey.encrypt(blindtext);
+
+    var data = {
+        signtext : signtextBig.toString(16)
+    };
+
+    //nonce = bignam.rand(nPublicUserkey)
+
+    console.log(data)
+
+    res.status(200).send(data);
 };

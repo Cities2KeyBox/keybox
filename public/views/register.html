@@ -1,16 +1,16 @@
 <div class="container" style="width: 300px; align-content: center">
     <form class="form-signin" style="text-align: left">
         <h2 class="form-signin-heading" style="text-align: center">Sign UP with alias</h2>
-        <input type="text" class="form-control" placeholder="Alias" autofocus style="margin-bottom: 5px">
-        <input type="password" class="form-control" placeholder="Password" autofocus style="margin-bottom: 5px">
-        <input type="password" class="form-control" placeholder="Repite password" autofocus style="margin-bottom: 5px">
-        <input type="text" class="form-control" placeholder="Signed Public Key" autofocus style="margin-bottom: 5px">
+        <input type="text" class="form-control" placeholder="Alias" autofocus style="margin-bottom: 5px" ng-model="user.alias">
+        <input type="password" class="form-control" placeholder="Password" autofocus style="margin-bottom: 5px" ng-model="user.pass">
+        <input type="password" class="form-control" placeholder="Repite password" autofocus style="margin-bottom: 5px" ng-model="user.passRepite">
+        <input type="text" class="form-control" placeholder="Signed Public Key" autofocus style="margin-bottom: 5px" ng-model="key.signed">
         <h4 class="form-signin-heading" style="text-align: center">Introduce private key values</h4>
-        <input type="text" class="form-control" placeholder="p" autofocus style="margin-bottom: 5px">
-        <input type="text" class="form-control" placeholder="q" autofocus style="margin-bottom: 5px">
-        <input type="text" class="form-control" placeholder="d" autofocus style="margin-bottom: 5px">
+        <input type="text" class="form-control" placeholder="p" autofocus style="margin-bottom: 5px" ng-model="user.p">
+        <input type="text" class="form-control" placeholder="q" autofocus style="margin-bottom: 5px" ng-model="user.q">
+        <input type="text" class="form-control" placeholder="d" autofocus style="margin-bottom: 5px" ng-model="user.d">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="register()">Sign Up</button>
+        <button class="btn btn-lg btn-primary btn-block" ng-disabled="error || incomplete" type="submit" ng-click="signup()">Sign Up</button>
     </form>
     <br>
     <form class="form-signin" style="text-align: right">
@@ -23,7 +23,7 @@
                 <td style="text-align: center"><b>Signed public key</b></td>
             </tr>
             <tr>
-                <td>{{signed}}<br><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="signed" on-copied="success()" on-error="fail(err)">Copiar</button></td>
+                <td class="estilo">{{signed}}<br><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="signed" on-copied="success()" on-error="fail(err)">Copiar</button></td>
             </tr>
         </table>
     </form>

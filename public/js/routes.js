@@ -164,7 +164,12 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
 
             $http.post('/serverKeys2', {text:text})
             .success(function(info){
-                console.log(info)
+
+                var signtextBig = bigInt(info.signtext, 16)
+                var signtext = signtextBig.toString(16);
+
+                $scope.signed = signtext;
+
             })
             .error(function(data){
                 console.log(data);
@@ -173,6 +178,25 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
                     console.log(data2);
                 })
     };
+
+    $scope.signup = function(){
+
+    };
+
+    $scope.test = function () {
+        if ($scope.user.pass !== $scope.user.passRepite) {
+            $scope.error = true;
+        } else {
+            $scope.error = false;
+        }
+        $scope.incomplete = false;
+        if ($scope.edit && (!$scope.user.alias.length ||
+            !$scope.user.alias.length ||
+            !$scope.user.pass.length || !$scope.user.passRepite.length)) {
+            $scope.incomplete = true;
+        }
+    };
+
 
 });
 
