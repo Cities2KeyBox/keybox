@@ -89,6 +89,11 @@ angularRoutingApp.config(function($routeProvider) {
             redirectTo: '/'
         });
 });
+angularRoutingApp.controller('mykeysController', function($scope, $http) {
+   $scope.message = "Add a new Key";
+
+
+});
 
 angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.message =  'Smart Cities II - KeyBox Proyect';

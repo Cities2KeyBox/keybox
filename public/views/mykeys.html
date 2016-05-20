@@ -9,13 +9,13 @@
             <form name="myForm">
                 <p>{{ message }}</p>
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="secreto" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="tag" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="n" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="comment" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="t" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="username" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="t" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="password" required>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg" ng-click="registrar()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
                 <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
