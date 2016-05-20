@@ -15,8 +15,6 @@ exports.getPublicKeys = function(req, res){
 };
 
 exports.postSignKey = function(req, res){
-    console.log('blindtext', req.body);
-
-    var key = keys.e.toString(16);
+    var key = keys.publicKey.e.toString(16);
     res.status(200).send(key);
 };

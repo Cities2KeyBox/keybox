@@ -162,7 +162,7 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
 
             console.log($scope.text);
 
-            $http.post('/serverKeys2', $scope.text)
+            $http.post('/serverKeys2', {text:text})
             .success(function(info){
                 console.log(info)
             })
