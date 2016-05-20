@@ -9,8 +9,6 @@
                 <form name="myForm">
                     <p>{{ message }}</p>
                     <div class="form-group">
-                        <!--<input type="text" class="form-control input-lg text-center" placeholder="Nombre" ng-model="newStudent.name" required>-->
-                        <!--<br>-->
                         <input type="text" class="form-control input-lg text-center" placeholder="Share" ng-model="share" required>
                         <br>
                     </div>
@@ -18,13 +16,11 @@
                         <tr class="info">
                         </tr>
                         <tr ng-repeat="share in shares">
-                            <td>{{ share }}</td>
+                            <td class="estilo">{{ share }}</td>
                         </tr>
                     </table>
                     <button type="submit" class="btn btn-success btn-lg" ng-click="addShare()" ng-disabled="myForm.$invalid || selected">Añadir share</button>
                     <button type="submit" class="btn btn-success btn-lg" ng-click="combine()">Combinar</button>
-                    <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
-                    <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Borrar</button>!-->
                 </form>
             </div>
 
