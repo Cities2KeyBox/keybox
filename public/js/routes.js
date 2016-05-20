@@ -2,6 +2,59 @@
 var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard']);
 var secrets = ('secrets.js');
 var rsa = ('rsa.js');
+//var rsa2 = ('rsa2.js');
+
+rsa2 = {
+    publicKey: function (bits, n, e) {
+        this.bits = bits;
+        this.n = n;
+        this.e = e;
+    },
+    privateKey: function (p, q, d, publicKey) {
+        this.p = p;
+        this.q = q;
+        this.d = d;
+        this.publicKey = publicKey;
+    },
+    generateKeys: function(bitlength) {
+        var p, q, n, phi, e, d, keys = {};
+        this.bitlength = bitlength || 2048;
+        console.log("Generating RSA keys of", this.bitlength, "bits");
+        p = bigInt.prime(this.bitlength / 2);
+        do {
+            q = bigInt.prime(this.bitlength / 2);
+        } while (q.compare(p) === 0);
+        n = p.multiply(q);
+
+        phi = p.subtract(1).multiply(q.subtract(1));
+
+        e = bigInt(65537);
+        d = bigInt.modInv(e, phi);
+
+        keys.publicKey = new rsa2.publicKey(this.bitlength, n, e);
+        keys.privateKey = new rsa2.privateKey(p, q, d, keys.publicKey);
+        return keys;
+    }
+};
+
+
+rsa2.publicKey.prototype = {
+    encrypt: function(m) {
+        return m.modPow(this.e, this.n);
+    },
+    decrypt: function(c) {
+        return c.modPow(this.e, this.n);
+    }
+};
+
+rsa2.privateKey.prototype = {
+    encrypt: function(m) {
+        return m.modPow(this.d, this.publicKey.n);
+    },
+    decrypt: function(c) {
+        return c.modPow(this.d, this.publicKey.n);
+    }
+};
 
 
 // Configuración de las rutas
@@ -56,15 +109,18 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
                 $scope.signup.mail = "";
                 $scope.signup.user = "";
                 console.log("HOLA 1");
-                var keys = rsa.generateKeys(1024);
+                var keys = rsa2.generateKeys(1024);
+
+                console.log('keys', keys);
 
                 // PRIVATE KEY
-                $scope.p = keys.privateKey.p.toString();
-                $scope.q = keys.privateKey.q.toString();
-                $scope.d = keys.privateKey.d.toString();
+                $scope.p = keys.privateKey.p.toString(16);
+                $scope.q = keys.privateKey.q.toString(16);
+                $scope.d = keys.privateKey.d.toString(16);
 
                 //PUBLIC KEY
-                $scope.n = keys.publicKey.n.toString();
+                $scope.n = keys.publicKey.n.toString(16);
+
 
             })
           
@@ -82,15 +138,27 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
 
 angularRoutingApp.controller('registerController', function ($scope, $http) {
 
-    $scope.sign = function(){
+    $scope.signPKey = function(){
         $http.get('/serverKeys').success(function(data){
-            var nServer = bigInt(data.n);
-            var eServer = bigInt(data.e);
 
-            console.log("n", nServer);
+            var nServer = bigInt(data.n, 16);
+            var eServer = bigInt(data.e, 16);
 
-            $http.post('signKey').success(function(signkey){
+            var r = bigInt.randBetween(0, nServer);
 
+            var publicKey = bigInt($scope.key.public, 16);
+
+            var blindMsg = publicKey.multiply(r.modPow(eServer, nServer)).mod(nServer);
+
+            var text = blindMsg.toString(16);
+
+            console.log(text);
+
+
+            $http.post('/signKey', text).success(function(info){
+                console.log(info)
+            }).error(function(data){
+                console.log(data);
             })
         })
     };
