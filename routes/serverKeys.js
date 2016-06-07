@@ -2,6 +2,8 @@ var bignum = require('bignum');
 var rsa = require('./rsa-bignum.js');
 
 var keys = rsa.generateKeys(1024);
+var nonce;
+var userPublicKey;
 
 exports.getPublicKeys = function(req, res){
     var data = {
@@ -22,9 +24,41 @@ exports.postSignKey = function(req, res){
         signtext : signtextBig.toString(16)
     };
 
-    //nonce = bignam.rand(nPublicUserkey)
-
-    console.log(data)
+    console.log(data);
 
     res.status(200).send(data);
+};
+
+exports.postChallenge1 = function (req, res){
+    console.log(req.body.info);
+    var signPublicKey = bignum(req.body.info, 16);
+    userPublicKey = keys.publicKey.decrypt(signPublicKey);
+
+    console.log('publicKey', userPublicKey.toString(16));
+
+    var nonceBig = bignum.rand(userPublicKey);
+
+    nonce = nonceBig.toString(16);
+
+    console.log('this is the nonce', nonce);
+
+    res.status(200).send(nonce);
+
+};
+
+exports.postChallenge2 = function (req, res){
+    console.log(req.body.signNonce);
+    var signPublicKey = bignum(req.body.signNonce, 16);
+
+    var nonceProveBig = signPublicKey.powm(keys.publicKey.e, userPublicKey);
+
+    var nonceProve = nonceProveBig.toString(16);
+
+    console.log('comprobacion nonce', nonceProve);
+
+    if (nonceProve == nonce){
+        res.status(200).send(nonceProve);
+    }else {
+        res.status(401).send(nonceProve);
+    }
 };

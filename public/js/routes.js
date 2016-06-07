@@ -165,8 +165,11 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
             $http.post('/serverKeys2', {text:text})
             .success(function(info){
 
-                var signtextBig = bigInt(info.signtext, 16)
-                var signtext = signtextBig.toString(16);
+                var signtextBig = bigInt(info.signtext, 16);
+
+                var msgsign = signtextBig.multiply(bigInt.modInv(r, nServer).mod(nServer));
+
+                var signtext = msgsign.toString(16);
 
                 $scope.signed = signtext;
 
@@ -180,8 +183,56 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
     };
 
     $scope.signup = function(){
+        var p = bigInt($scope.user.p, 16);
+        var q = bigInt($scope.user.q, 16);
+        var d = bigInt($scope.user.d, 16);
+        var signedKeyBig = bigInt($scope.key.signed, 16);
+        var signedKey = signedKeyBig.toString(16);
 
+
+
+        console.log('info', signedKey);
+
+        $http.post('/challenge1', {info:signedKey})
+            .success(function(data){
+                console.log('this is the nonce', data);
+                var n = p.multiply(q);
+                var nonce = bigInt(data, 16);
+                var signedNonceBig = nonce.modPow(d, n);
+                var signedNonce = signedNonceBig.toString(16);
+
+                console.log('nonce firmado', signedNonce);
+
+                $http.post('/challenge2', {signNonce:signedNonce})
+                    .success(function(data2){
+                        if (data2.statusCode < 200 || data2.statusCode > 200){
+                            console.log(data2);
+                        }else {
+                            console.log('comprobación correcta', data2);
+
+                            var newuser = {
+                                name : $scope.user.alias,
+                                password : $scope.user.pass
+                            };
+
+                            $http.post('/register', newuser).success(function(info2){
+                                $scope.user.alias = "";
+                                $scope.user.pass = "";
+                            })
+                        }
+                }).error(function(data2){
+                    console.log(data2)
+                })
+
+            })
+            .error(function(data){
+                console.log(data);
+            })
     };
+
+    /*$scope.$watch('user.pass', function () { $scope.test(); });
+    $scope.$watch('user.passRepite', function () { $scope.test(); });
+    $scope.$watch('user.alias', function () { $scope.test(); });
 
     $scope.test = function () {
         if ($scope.user.pass !== $scope.user.passRepite) {
@@ -195,7 +246,7 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
             !$scope.user.pass.length || !$scope.user.passRepite.length)) {
             $scope.incomplete = true;
         }
-    };
+    };*/
 
 
 });
