@@ -92,7 +92,7 @@ angularRoutingApp.config(function($routeProvider) {
             redirectTo: '/'
         });
 });
-angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto, $location, $location) {
+angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto, $location, $window) {
     $scope.message = "Add a new Key";
 
     $window.location.reload();
@@ -131,17 +131,48 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
     }
 });
 
-angularRoutingApp.controller('mainController', function($scope,$http) {
+angularRoutingApp.controller('mainController', function($scope, $http) {
     $scope.message =  'Smart Cities II - KeyBox Proyect';
     $scope.signupI = false;
     $scope.signupII = true;
-
+    $scope.token = "";
     $scope.logueado = true; //false si logueado
     $scope.nologueado = false; //true si logueado
     $scope.user = window.sessionStorage.getItem("user");
 
     $scope.signIn = function (){
 
+        var username = $scope.username;
+        var password = $scope.password;
+        var credentials = {
+            username: username,
+            password: password
+        };
+        $http.post('/login', credentials)
+            .success(function (data) {
+                console.log("User Logged", data);
+                $scope.token = "TOKEN " + data.token;
+                console.log($scope.token);
+                //window.sessionStorage.setItem("user", JSON.stringify(data));
+                //$scope.usuariologeado = data;
+                //window.location.reload();
+                //$location.path("/")
+                $scope.logueado = false; //false si logueado
+                $scope.nologueado = true; //true si logueado
+            })
+            .error(function (data) {
+                console.log(data);
+            })
+
+    };
+
+    $scope.signOut = function () {
+
+        $scope.token = "";
+        $scope.logueado = true; //false si logueado
+        $scope.nologueado = false; //true si logueado
+        console.log($scope.token);
+        //$state.transitionTo("#home");
     };
 
     $scope.signI = function() {
