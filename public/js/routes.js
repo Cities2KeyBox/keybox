@@ -119,7 +119,11 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.signupI = false;
     $scope.signupII = true;
 
-        $scope.signI = function() {
+    $scope.logueado = true; //false si logueado
+    $scope.nologueado = false; //true si logueado
+    $scope.user = window.sessionStorage.getItem("user");
+
+    $scope.signI = function() {
         
         $scope.signupI = false; //poner a true
         $scope.signupII = false;
