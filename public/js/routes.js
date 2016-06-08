@@ -4,6 +4,8 @@ var secrets = ('secrets.js');
 var rsa = ('rsa.js');
 //var rsa2 = ('rsa2.js');
 
+var token;
+
 rsa2 = {
     publicKey: function (bits, n, e) {
         this.bits = bits;
@@ -90,9 +92,26 @@ angularRoutingApp.config(function($routeProvider) {
         });
 });
 angularRoutingApp.controller('mykeysController', function($scope, $http) {
-   $scope.message = "Add a new Key";
+    $scope.message = "Add a new Key";
 
+    $http.defaults.headers.common['Authorization'] = token;
 
+    $scope.addkey = function(){
+        var newKey = {
+            tag : $scope.key.tag,
+            username : $scope.key.username,
+            password : $scope.key.password,
+            comment : $scope.key.comment
+        };
+
+        console.log('newkey', newKey);
+
+        $http.post('/key/', newKey).success(function(data){
+            console.log('correcto', data)
+        }).error(function(data){
+            console.log('incorrecto', data)
+        })
+    }
 });
 
 angularRoutingApp.controller('mainController', function($scope,$http) {
@@ -216,8 +235,13 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
                             };
 
                             $http.post('/register', newuser).success(function(info2){
+                                console.log('token', info2);
+                                token = "TOKEN " + info2.token;
+                                console.log(token);
                                 $scope.user.alias = "";
                                 $scope.user.pass = "";
+                            }).error(function(info2){
+                                console.log(info2)
                             })
                         }
                 }).error(function(data2){

@@ -9,15 +9,15 @@
             <form name="myForm">
                 <p>{{ message }}</p>
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="tag" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="key.tag" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="comment" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="key.comment" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="username" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="key.username" required>
                     <br>
-                    <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="password" required>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="key.password" required>
                 </div>
-                <button type="submit" class="btn btn-success btn-lg" ng-click="registrar()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
+                <button type="submit" class="btn btn-success btn-lg" ng-click="addkey()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
                 <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
                 <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Borrar</button>!-->
             </form>

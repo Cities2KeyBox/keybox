@@ -9,7 +9,8 @@ var nodemailer = require('nodemailer');
 // create reusable transporter object using the default SMTP transport
 //var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
 
-exports.signup = function(req, res, next) {  
+exports.signup = function(req, res, next) {
+
     var Hashes = require('jshashes');
     var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
     var user = new User({
@@ -75,7 +76,7 @@ exports.signupCommonUser = function (req, res){
     });
 };
 
-exports.signin = function(req, res, next) {
+exports.signIn = function(req, res, next) {
     var Hashes = require('jshashes');
     var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
     User.findOne({username: req.body.username,password:passwordHash}, function(err, user) {
@@ -83,5 +84,4 @@ exports.signin = function(req, res, next) {
     	if(!user) res.status(403).send("403 Unauthorization")
     	else res.status(200).send({token: service.createToken(user)});
 	});
-    	
 };
