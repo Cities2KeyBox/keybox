@@ -11,11 +11,9 @@ var nodemailer = require('nodemailer');
 
 exports.signup = function(req, res, next) {
 
-    var Hashes = require('jshashes');
-    var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
     var user = new User({
     	username:req.body.username,
-    	password:passwordHash
+    	password:req.body.password
     });
 
     user.save(function(err){
@@ -77,9 +75,7 @@ exports.signupCommonUser = function (req, res){
 };
 
 exports.signIn = function(req, res, next) {
-    var Hashes = require('jshashes');
-    var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
-    User.findOne({username: req.body.username,password:passwordHash}, function(err, user) {
+    User.findOne({username: req.body.username,password:req.body.password}, function(err, user) {
     	if(err) next(err);
     	if(!user) res.status(403).send("403 Unauthorization")
     	else res.status(200).send({token: service.createToken(user)});
