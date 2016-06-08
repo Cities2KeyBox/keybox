@@ -1,9 +1,10 @@
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard']);
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard', 'mdo-angular-cryptography']);
 var secrets = ('secrets.js');
 var rsa = ('rsa.js');
 //var rsa2 = ('rsa2.js');
 var passUser;
+var aliasUser;
 var token;
 
 rsa2 = {
@@ -91,14 +92,25 @@ angularRoutingApp.config(function($routeProvider) {
             redirectTo: '/'
         });
 });
-angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto) {
+angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto, $location, $location) {
     $scope.message = "Add a new Key";
 
+    $window.location.reload();
+
+    $scope.keys = {};
+
     $http.defaults.headers.common['Authorization'] = token;
+
+    $http.get('/key/', aliasUser).success(function(keys){
+        $scope.keys = keys;
+    }).error(function(data){
+        console.log('Error: ' + data);
+    });
+
     $scope.addkey = function(){
 
-        var pass = $crypto.encrypt($scope.key.password, passUser);
-        var name = $crypto.encrypt($scope.key.username, passUser);
+        var pass = $crypto.encrypt($scope.key.password, '1234');
+        var name = $crypto.encrypt($scope.key.username, '1234');
 
 
         var newKey = {
@@ -113,7 +125,8 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
         $http.post('/key/', newKey).success(function(data){
             console.log('correcto', data)
         }).error(function(data){
-            console.log('incorrecto', data)
+            console.log('incorrecto', data);
+            $location.path('/')
         })
     }
 });
@@ -126,6 +139,10 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
     $scope.logueado = true; //false si logueado
     $scope.nologueado = false; //true si logueado
     $scope.user = window.sessionStorage.getItem("user");
+
+    $scope.signIn = function (){
+
+    };
 
     $scope.signI = function() {
         
@@ -163,12 +180,9 @@ angularRoutingApp.controller('mainController', function($scope,$http) {
             });
             
         };
-        //Conexión con backend
-
-        //
 });
 
-angularRoutingApp.controller('registerController', function ($scope, $http) {
+angularRoutingApp.controller('registerController', function ($scope, $http, $location) {
 
     $scope.signPKey = function(){
         $http.get('/serverKeys')
@@ -238,6 +252,7 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
                             console.log('comprobación correcta', data2);
 
                             passUser = $scope.user.pass;
+                            aliasUser = $scope.user.alias;
 
                             var newuser = {
                                 name : $scope.user.alias,
@@ -250,6 +265,9 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
                                 console.log(token);
                                 $scope.user.alias = "";
                                 $scope.user.pass = "";
+                                $scope.logueado = false;
+                                $scope.nologueado = true;
+                                $location.path('/mykeys');
                             }).error(function(info2){
                                 console.log(info2)
                             })
@@ -263,25 +281,6 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
                 console.log(data);
             })
     };
-
-    /*$scope.$watch('user.pass', function () { $scope.test(); });
-    $scope.$watch('user.passRepite', function () { $scope.test(); });
-    $scope.$watch('user.alias', function () { $scope.test(); });
-
-    $scope.test = function () {
-        if ($scope.user.pass !== $scope.user.passRepite) {
-            $scope.error = true;
-        } else {
-            $scope.error = false;
-        }
-        $scope.incomplete = false;
-        if ($scope.edit && (!$scope.user.alias.length ||
-            !$scope.user.alias.length ||
-            !$scope.user.pass.length || !$scope.user.passRepite.length)) {
-            $scope.incomplete = true;
-        }
-    };*/
-
 
 });
 

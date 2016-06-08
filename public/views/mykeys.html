@@ -31,9 +31,10 @@
                 <td> Password </td>
              </tr>
             <tr ng-repeat="key in keys">
-                <td>{{ $index + 1 }}</td>
-                <td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
-                <td class="estilo">{{key}}</td>
+                <td>{{ key.tag }}</td>
+                <td>{{ key.username }}</td>
+                <td>{{ key.password }}</td>
+                <td>{{ key.comment }}</td>
             </tr>
         </table>
         </div>
@@ -42,3 +43,7 @@
 </div>
 
 </div>
+
+<!--<td>{{ $index + 1 }}</td>
+<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
+<!--<td class="estilo">{{key}}</td>-->
