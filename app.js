@@ -67,10 +67,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-/*
-app.listen(3000, function(){
+
+/*app.listen(3000, function(){
     console.log("Server listen to port 3000");
-})
+});
 */
 var fs = require('fs');
 var certAuthority = fs.readFileSync('./localhost.crt', 'utf8'); // StartSSL.com Class 1 Intermediate Server CA
@@ -79,7 +79,9 @@ var certificate = fs.readFileSync('./localhost.crt', 'utf8'); // Server Certific
 credentials = {ca: certAuthority, key: privateKey, cert: certificate};
 
 var httpsAPI = require('https').createServer(credentials, app);
-httpsAPI.listen(3000);
+httpsAPI.listen(3000, function(){
+  console.log("Server listen to port 3000");
+});
 
 
-//module.exports = app;
+module.exports = app;

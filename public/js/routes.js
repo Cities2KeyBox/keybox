@@ -1,5 +1,9 @@
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard', 'mdo-angular-cryptography']);
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard', 'mdo-angular-cryptography'])
+    .run(function($rootScope) {
+        $rootScope.token = "";
+    });
+
 var secrets = ('secrets.js');
 var rsa = ('rsa.js');
 //var rsa2 = ('rsa2.js');
@@ -92,10 +96,10 @@ angularRoutingApp.config(function($routeProvider) {
             redirectTo: '/'
         });
 });
-angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto, $location, $window) {
+angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto, $location, $window, $rootScope) {
     $scope.message = "Add a new Key";
 
-    $window.location.reload();
+    //$window.location.reload();
 
     $scope.keys = {};
 
@@ -131,11 +135,10 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
     }
 });
 
-angularRoutingApp.controller('mainController', function($scope, $http) {
+angularRoutingApp.controller('mainController', function($scope, $http, $rootScope, $location) {
     $scope.message =  'Smart Cities II - KeyBox Proyect';
     $scope.signupI = false;
     $scope.signupII = true;
-    $scope.token = "";
     $scope.logueado = true; //false si logueado
     $scope.nologueado = false; //true si logueado
     $scope.user = window.sessionStorage.getItem("user");
@@ -151,12 +154,9 @@ angularRoutingApp.controller('mainController', function($scope, $http) {
         $http.post('/login', credentials)
             .success(function (data) {
                 console.log("User Logged", data);
-                $scope.token = "TOKEN " + data.token;
-                console.log($scope.token);
-                //window.sessionStorage.setItem("user", JSON.stringify(data));
-                //$scope.usuariologeado = data;
-                //window.location.reload();
-                //$location.path("/")
+                $rootScope.token = "TOKEN " + data.token;
+                console.log($rootScope.token);
+                $location.path("/");
                 $scope.logueado = false; //false si logueado
                 $scope.nologueado = true; //true si logueado
             })
@@ -168,11 +168,11 @@ angularRoutingApp.controller('mainController', function($scope, $http) {
 
     $scope.signOut = function () {
 
-        $scope.token = "";
+        $rootScope.token = "";
         $scope.logueado = true; //false si logueado
         $scope.nologueado = false; //true si logueado
-        console.log($scope.token);
-        //$state.transitionTo("#home");
+        console.log("Token eliminado", $scope.token);
+        $location.path('/');
     };
 
     $scope.signI = function() {
@@ -286,25 +286,28 @@ angularRoutingApp.controller('registerController', function ($scope, $http, $loc
                             aliasUser = $scope.user.alias;
 
                             var newuser = {
-                                name : $scope.user.alias,
+                                username : $scope.user.alias,
                                 password : $scope.user.pass
                             };
 
                             $http.post('/register', newuser).success(function(info2){
                                 console.log('token', info2);
                                 token = "TOKEN " + info2.token;
-                                console.log(token);
                                 $scope.user.alias = "";
                                 $scope.user.pass = "";
                                 $scope.logueado = false;
                                 $scope.nologueado = true;
-                                $location.path('/mykeys');
+                                $scope.token = token;
+                                console.log($scope.token);
+                                $location.path('/');
                             }).error(function(info2){
-                                console.log(info2)
+                                console.log("error en login", info2)
                             })
+
                         }
+
                 }).error(function(data2){
-                    console.log(data2)
+                    console.log("error en challenge2", data2)
                 })
 
             })
