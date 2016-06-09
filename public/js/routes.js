@@ -103,35 +103,68 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
 
     $scope.keys = {};
 
-    $http.defaults.headers.common['Authorization'] = token;
+    $http.defaults.headers.common['authoritation'] = $rootScope.token;
 
-    $http.get('/key/', aliasUser).success(function(keys){
+
+    $http({
+        method: 'GET',
+        url:'/key/',
+        headers:{
+            authoritation : $rootScope.token
+        }
+    }).success(function(keys){
+        console.log($rootScope.token);
+        $scope.keys = keys;
+    }).error(function(data){
+    console.log('Error: ' + data);
+    console.log($rootScope.token);
+    });
+
+
+
+  /*  $http.get('/key/').success(function(keys){
+        console.log($rootScope.token);
         $scope.keys = keys;
     }).error(function(data){
         console.log('Error: ' + data);
-    });
+        console.log($rootScope.token);
 
-    $scope.addkey = function(){
+    });
+*/
+    $scope.addkey = function() {
 
         var pass = $crypto.encrypt($scope.key.password, '1234');
         var name = $crypto.encrypt($scope.key.username, '1234');
 
 
         var newKey = {
-            tag : $scope.key.tag,
-            username : name,
-            password : pass,
-            comment : $scope.key.comment
+            tag: $scope.key.tag,
+            username: name,
+            password: pass,
+            comment: $scope.key.comment
         };
 
-        console.log('newkey', newKey);
+        console.log('New key:', newKey);
 
-        $http.post('/key/', newKey).success(function(data){
-            console.log('correcto', data)
-        }).error(function(data){
-            console.log('incorrecto', data);
-            $location.path('/')
-        })
+
+        $http({
+            method: 'POST',
+            url: '/key/',
+            headers: {authoritation: $rootScope.token},
+            data: myData
+    });
+
+        $http.post('/key/', newKey)({
+            headers: {
+                authoritation: $rootScope.token
+            }
+        }).success(function (keys) {
+            $scope.keys = keys;
+            console.log('Envio correcto, claves:', keys);
+        }).error(function (data) {
+            console.log('Error: ' + data);
+        });
+
     }
 });
 
