@@ -11,6 +11,7 @@
     "flot.tooltip": "~0.8.4",
     "angular-clipboard": "^1.4.1",
     "big-integer": "",
-    "fast-sha256": "^1.0.0"
+    "fast-sha256": "^1.0.0",
+    "angular-md5": "^0.1.10"
   }
 }
