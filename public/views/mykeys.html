@@ -1,5 +1,5 @@
 <div class="jumbotron text-center">
-    <h3>Keys Management</h3>
+    <h2>Keys Management</h2>
     <br>
     <div class="container">
 
@@ -7,14 +7,15 @@
 
         <div class="col-sm-6 text-center">
             <form name="myForm">
-                <p>{{ message }}</p>
+                <h3>{{ message }}</h3>
                 <div class="form-group">
+                    <a>TAG</a>
                     <input type="text" class="form-control input-lg text-center" placeholder="TAG" ng-model="key.tag" required>
-                    <br>
+                    <a>Comment</a>
                     <input type="text" class="form-control input-lg text-center" placeholder="Comment" ng-model="key.comment" required>
-                    <br>
+                    <a>Username</a>
                     <input type="text" class="form-control input-lg text-center" placeholder="Username" ng-model="key.username" required>
-                    <br>
+                    <a>Password</a>
                     <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="key.password" required>
                 </div>
                 <div>
@@ -25,6 +26,7 @@
             </form>
         </div>
         <div class="col-sm-6">
+            <h3>Your keys</h3>
         <table class="table table-striped" style='table-layout:fixed'>
              <tr class="info">
                 <td>TAG</td>
