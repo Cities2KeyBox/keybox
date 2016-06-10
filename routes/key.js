@@ -39,7 +39,6 @@ getKey = function (req, res, next){
 }
 
 createKey = function (req, res, next){
-	console.log(req);
 	if(req.body.tag == undefined || req.body.username == undefined || req.body.password == undefined) res.status(400).send("400 Bad Request");
 	else{
 		userModel.findOne({_id:req.user}, function (err, user){

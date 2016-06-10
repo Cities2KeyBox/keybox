@@ -17,9 +17,11 @@
                     <br>
                     <input type="text" class="form-control input-lg text-center" placeholder="Password" ng-model="key.password" required>
                 </div>
-                <button type="submit" class="btn btn-success btn-lg" ng-click="addkey()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
-                <!--<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
-                <button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Borrar</button>!-->
+                <div>
+                    <button type="submit" class="btn btn-success btn-lg" ng-click="addkey()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Add Key</button>
+                    <button type="submit" class="btn btn-danger btn-lg" ng-click="removeKey()" ng-disabled="myForm.$invalid || t == 1 || n == 1 || t > n">Delete Key</button>
+                </div>
+
             </form>
         </div>
         <div class="col-sm-6">
@@ -27,23 +29,31 @@
              <tr class="info">
                 <td>TAG</td>
                 <td> Comment </td>
-                <td> Username </td>
-                <td> Password </td>
              </tr>
-            <tr ng-repeat="key in keys">
-                <td>{{ key.tag }}</td>
-                <td>{{ key.username }}</td>
-                <td>{{ key.password }}</td>
+            <tr ng-repeat="key in keys" ng-click="selectKey(key)">
+                <td>{{ key.tag}}</td>
                 <td>{{ key.comment }}</td>
             </tr>
         </table>
         </div>
-
     </div>
 </div>
+    <!--<br><br>
+    <div class="col-sm-6">
+        <table class="table table-striped" style='table-layout:fixed'>
+            <tr class="info">
+                <td>TAG</td>
+                <td> Comment </td>
+                <td> Username </td>
+                <td> Password </td>
+            </tr>
+            <tr ng-repeat="decryptKey in decryptKeys">
+                <td>{{ decryptKey.tag}}</td>
+                <td>{{ decryptKey.comment }}</td>
+                <td>{{ decryptKey.username }}</td>
+                <td>{{ decryptKey.password }}</td>
+            </tr>
+        </table>
+    </div>-->
 
 </div>
-
-<!--<td>{{ $index + 1 }}</td>
-<td><button class="btn btn-lg" style='table-layout:fixed' clipboard supported="supported" text="share" on-copied="success()" on-error="fail(err)">Copiar</button></td>        <!--<td><button ng-click="deleteStudent(student._id)">x</button></td>-->
-<!--<td class="estilo">{{key}}</td>-->

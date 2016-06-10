@@ -1,5 +1,5 @@
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard', 'mdo-angular-cryptography'])
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'angular-clipboard', 'mdo-angular-cryptography', 'angular-md5'])
     .run(function($rootScope) {
         $rootScope.token = "";
     });
@@ -8,7 +8,6 @@ var secrets = ('secrets.js');
 var rsa = ('rsa.js');
 //var rsa2 = ('rsa2.js');
 var passUser;
-var aliasUser;
 var token;
 
 rsa2 = {
@@ -100,8 +99,9 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
     $scope.message = "Add a new Key";
 
     //$window.location.reload();
-
+    $scope.keyAES = passUser;
     $scope.keys = {};
+    $scope.decryptKeys = {};
 
     $http.defaults.headers.common['authoritation'] = $rootScope.token;
 
@@ -133,26 +133,17 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
 */
     $scope.addkey = function() {
 
-        var pass = $crypto.encrypt($scope.key.password, '1234');
-        var name = $crypto.encrypt($scope.key.username, '1234');
-
+        var pass = $crypto.encrypt($scope.key.password, $scope.keyAES);
+        var name = $crypto.encrypt($scope.key.username, $scope.keyAES);
 
         var newKey = {
             tag: $scope.key.tag,
+            comment: $scope.key.comment,
             username: name,
-            password: pass,
-            comment: $scope.key.comment
+            password: pass
         };
 
         console.log('New key:', newKey);
-
-
-        $http({
-            method: 'POST',
-            url: '/key/',
-            headers: {authoritation: $rootScope.token},
-            data: myData
-    });
 
         $http.post('/key/', newKey)({
             headers: {
@@ -165,10 +156,49 @@ angularRoutingApp.controller('mykeysController', function($scope, $http, $crypto
             console.log('Error: ' + data);
         });
 
+    };
+
+    $scope.removeKey = function() {
+
+        console.log('New key:', $scope.key);
+
+        $http.delete('/key/' + $scope.key._id)({
+            headers: {
+                authoritation: $rootScope.token
+            }
+        }).success(function (keys) {
+            $scope.keys = keys;
+            console.log('Envio correcto, claves:', keys);
+        }).error(function (data) {
+            console.log('Error: ' + data);
+        });
+    };
+
+    $scope.selectKey = function(key){
+        var userD = $crypto.decrypt(key.username, $scope.keyAES);
+        var passD = $crypto.decrypt(key.password, $scope.keyAES);
+
+        console.log('user', userD);
+
+        var selectedKey = {
+            _id : key._id,
+            tag: key.tag,
+            username: userD,
+            password: passD,
+            comment: key.comment
+        };
+
+        $scope.decryptKeys = selectedKey;
+
+        $scope.key = {};
+        $scope.key = selectedKey;
+
+        console.log('decrypt key', $scope.decryptKeys);
     }
+
 });
 
-angularRoutingApp.controller('mainController', function($scope, $http, $rootScope, $location) {
+angularRoutingApp.controller('mainController', function($scope, $http, $rootScope, $location, md5) {
     $scope.message =  'Smart Cities II - KeyBox Proyect';
     $scope.signupI = false;
     $scope.signupII = true;
@@ -179,16 +209,18 @@ angularRoutingApp.controller('mainController', function($scope, $http, $rootScop
     $scope.signIn = function (){
 
         var username = $scope.username;
-        var password = $scope.password;
+        passUser = $scope.password;
+        var hashPass = md5.createHash(passUser);
         var credentials = {
             username: username,
-            password: password
+            password: hashPass
         };
         $http.post('/login', credentials)
             .success(function (data) {
                 console.log("User Logged", data);
                 $rootScope.token = "TOKEN " + data.token;
                 console.log($rootScope.token);
+
                 $location.path("/");
                 $scope.logueado = false; //false si logueado
                 $scope.nologueado = true; //true si logueado
@@ -246,7 +278,7 @@ angularRoutingApp.controller('mainController', function($scope, $http, $rootScop
         };
 });
 
-angularRoutingApp.controller('registerController', function ($scope, $http, $location) {
+angularRoutingApp.controller('registerController', function ($scope, $http, $location, md5) {
 
     $scope.signPKey = function(){
         $http.get('/serverKeys')
@@ -317,10 +349,11 @@ angularRoutingApp.controller('registerController', function ($scope, $http, $loc
 
                             passUser = $scope.user.pass;
                             aliasUser = $scope.user.alias;
+                            var hashPassword = md5.createHash(passUser);
 
                             var newuser = {
                                 username : $scope.user.alias,
-                                password : $scope.user.pass
+                                password : hashPassword
                             };
 
                             $http.post('/register', newuser).success(function(info2){

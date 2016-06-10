@@ -10,6 +10,7 @@
     "bootstrap-social": "~4.8.0",
     "flot.tooltip": "~0.8.4",
     "angular-clipboard": "^1.4.1",
-    "big-integer": ""
+    "big-integer": "",
+    "fast-sha256": "^1.0.0"
   }
 }
